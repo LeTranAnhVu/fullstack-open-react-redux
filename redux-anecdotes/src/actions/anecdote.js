@@ -1,4 +1,3 @@
-import {asObject} from '../utils/anecdoteUtils'
 
 export const voteAction = (anecdoteId) => ({
   type: 'VOTE',
@@ -7,5 +6,11 @@ export const voteAction = (anecdoteId) => ({
 
 export const addAnecdoteAction = (anecdote) => ({
   type: 'ADD_ANECDOTE',
-  payload: asObject(anecdote)
+  payload: anecdote
 })
+
+export const initAnecdoteAction = (anecdotes) => ({
+  type: 'INIT_ANECDOTE',
+  payload: anecdotes
+})
+

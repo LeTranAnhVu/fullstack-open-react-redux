@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {addAnecdoteAction} from '../actions/anecdote'
 import {useDispatch} from 'react-redux'
 import {pushNotification} from '../actions/notification'
+import anecdoteService from '../service/anecdote'
 
 const AnecdoteForm = () => {
   const [data, setData] = useState('')
@@ -11,12 +12,19 @@ const AnecdoteForm = () => {
     setData(value)
   }
 
-  const onCreate = (e) => {
+  const onCreate = async (e) => {
     e.preventDefault()
     if (data.trim()) {
-      dispatch(addAnecdoteAction(data.trim()))
-      dispatch(pushNotification({message: `you created ${data.trim()}`, type: 'info'}))
-      setData('')
+      try {
+        const newAnec = await anecdoteService.create(data.trim())
+        dispatch(addAnecdoteAction(newAnec))
+        dispatch(pushNotification({message: `you created ${data.trim()}`, type: 'info'}))
+        setData('')
+      }catch (e) {
+        console.log(e.response)
+      }
+
+
     }
   }
 
