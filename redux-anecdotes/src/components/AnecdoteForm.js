@@ -19,10 +19,13 @@ const AnecdoteForm = () => {
   }
 
   return (
-    <form>
-      <div><input value={data} onChange={handeData}/></div>
-      <button onClick={onCreate}>create</button>
-    </form>
+    <div>
+      <h2>create new</h2>
+      <form>
+        <div><input value={data} onChange={handeData}/></div>
+        <button onClick={onCreate}>create</button>
+      </form>
+    </div>
   )
 }
 

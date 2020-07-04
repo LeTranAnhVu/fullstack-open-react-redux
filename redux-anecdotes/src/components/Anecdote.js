@@ -3,12 +3,17 @@ import { useDispatch } from 'react-redux'
 import {voteAction} from '../actions/anecdote'
 
 const Anecdote = ({anecdote}) => {
+  const style = {
+    border: `1px #ccc solid`,
+    margin: `10px`,
+    padding: `10px`
+  }
   const dispatch = useDispatch()
   const vote = (id) => {
     dispatch(voteAction(id))
   }
   return (
-    <div key={anecdote.id}>
+    <div style={style}>
       <div>
         {anecdote.content}
       </div>
