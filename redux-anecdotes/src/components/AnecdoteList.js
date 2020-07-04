@@ -5,7 +5,7 @@ import _ from 'lodash'
 import Anecdote from './Anecdote'
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => _.sortBy(state, 'votes').reverse())
+  const anecdotes = useSelector(({anecdotes}) => _.sortBy(anecdotes, 'votes').reverse())
   return (
     <div>
       {anecdotes.map(anecdote =>
