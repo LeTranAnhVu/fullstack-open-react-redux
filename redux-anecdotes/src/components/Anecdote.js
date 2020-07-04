@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import {voteAction} from '../actions/anecdote'
+import {pushNotification} from '../actions/notification'
 
 const Anecdote = ({anecdote}) => {
   const style = {
@@ -11,6 +12,7 @@ const Anecdote = ({anecdote}) => {
   const dispatch = useDispatch()
   const vote = (id) => {
     dispatch(voteAction(id))
+    dispatch(pushNotification({message: `you voted ${anecdote.content}`, type: 'info'}))
   }
   return (
     <div style={style}>

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {addAnecdoteAction} from '../actions/anecdote'
 import {useDispatch} from 'react-redux'
+import {pushNotification} from '../actions/notification'
 
 const AnecdoteForm = () => {
   const [data, setData] = useState('')
@@ -14,6 +15,7 @@ const AnecdoteForm = () => {
     e.preventDefault()
     if (data.trim()) {
       dispatch(addAnecdoteAction(data.trim()))
+      dispatch(pushNotification({message: `you created ${data.trim()}`, type: 'info'}))
       setData('')
     }
   }
