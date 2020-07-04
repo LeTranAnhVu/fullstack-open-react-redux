@@ -1,3 +1,5 @@
+import {asObject} from '../utils/anecdoteUtils'
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -6,16 +8,6 @@ const anecdotesAtStart = [
   'Premature optimization is the root of all evil.',
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
-
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = (anecdote) => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
-  }
-}
 
 const initialState = anecdotesAtStart.map(asObject)
 
@@ -29,6 +21,10 @@ const reducer = (state = initialState, action) => {
         votes: foundItem.votes + 1
       }
       return state.map(item => item.id === id ? changeItem : item)
+    }
+    case 'ADD_ANECDOTE': {
+      const newAnec = action.payload
+      return [...state, newAnec]
     }
     default: {
       return state
