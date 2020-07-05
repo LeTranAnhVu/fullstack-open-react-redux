@@ -15,16 +15,8 @@ const AnecdoteForm = () => {
   const onCreate = async (e) => {
     e.preventDefault()
     if (data.trim()) {
-      try {
-        const newAnec = await anecdoteService.create(data.trim())
-        dispatch(addAnecdoteAction(newAnec))
-        dispatch(pushNotification({message: `you created ${data.trim()}`, type: 'info'}))
-        setData('')
-      }catch (e) {
-        console.log(e.response)
-      }
-
-
+      dispatch(addAnecdoteAction(data.trim()))
+      setData('')
     }
   }
 

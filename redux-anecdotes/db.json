@@ -38,7 +38,12 @@
     {
       "content": "Action creators are exactly that—functions that create actions. It's easy to conflate the terms “action” and “action creator”, so do your best to use the proper term",
       "id": "54159",
-      "votes": 0
+      "votes": 5
+    },
+    {
+      "content": "create new",
+      "id": "9545",
+      "votes": 5
     }
   ]
 }

@@ -13,20 +13,15 @@ const initialState = []
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'VOTE': {
-      const id = action.payload
-      const foundItem = state.find(item => item.id === id)
-      const changeItem = {
-        ...foundItem,
-        votes: foundItem.votes + 1
-      }
-      return state.map(item => item.id === id ? changeItem : item)
+    case 'UPDATE_ANECDOTE': {
+      const updateItem = action.payload
+      return state.map(item => item.id === updateItem.id ? updateItem : item)
     }
     case 'ADD_ANECDOTE': {
       const newAnec = action.payload
       return [...state, newAnec]
     }
-    case 'INIT_ANECDOTE': {
+    case 'INIT_ANECDOTES': {
       const list = action.payload
       return [...list]
     }
