@@ -1,11 +1,16 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+const Menu = () => {
+  const padding = {
+    paddingRight: 5
+  }
+  return (
+    <div>
+      <Link to='/anecdotes' style={padding}>anecdotes</Link>
+      <Link to='/create-new' style={padding}>create new</Link>
+      <Link to='/about' style={padding}>about</Link>
+    </div>
+  )
+}
 
-const Footer = () => (
-  <div>
-    Anecdote app for <a href='https://courses.helsinki.fi/fi/tkt21009'>Full Stack -websovelluskehitys</a>.
-
-    See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2019/routed-anecdotes/blob/master/src/App.js</a> for the source code.
-  </div>
-)
-
-export default Footer
+export default Menu

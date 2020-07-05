@@ -1,11 +1,15 @@
 import React from 'react'
+import {useParams} from 'react-router-dom'
+import Anecdote from '../components/Anecdote'
 
-const AnecdoteList = ({ anecdotes }) => (
-  <div>
-    <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
-    </ul>
-  </div>
-)
-export default AnecdoteList
+const AnecdoteDetail = ({anecdotes}) => {
+  const {id} = useParams()
+  const anecdote = anecdotes.find(item => item.id === id)
+  return (
+    <div>
+      <h2>Anecdote Detail</h2>
+      <Anecdote anecdote={anecdote}/>
+    </div>
+  )
+}
+export default AnecdoteDetail
