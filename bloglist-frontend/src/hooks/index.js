@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react'
-import localstorage from '../utils/localstorage'
 import {useDispatch, useSelector} from 'react-redux'
-import {currentUserLogout, getUserFromLocal} from '../redux/actions/currentUser'
+import {currentUserLogout} from '../redux/actions/currentUser'
 
 
 export const useCurrentUser = () => {

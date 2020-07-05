@@ -1,4 +1,4 @@
-import {ADD_BLOG, FETCH_BLOGS, REMOVE_BLOG, LIKE_BLOG} from '../types'
+import {ADD_BLOG, FETCH_BLOGS, REMOVE_BLOG, LIKE_BLOG, COMMENT_BLOG} from '../types'
 
 const initialState = []
 
@@ -14,12 +14,10 @@ const blogReducer = (state = initialState, {type, payload=undefined}) => {
       return state.filter(item => item.id !== payload.id)
     }
     case LIKE_BLOG: {
-      return state.map(item => {
-        if (item.id === payload.id) {
-          return {...item, likes: payload.likes}
-        }
-        return item
-      })
+      return state.map(item => item.id === payload.id ? payload :item )
+    }
+    case COMMENT_BLOG: {
+      return state.map(item => item.id === payload.id ? payload :item )
     }
     default: {
       return state

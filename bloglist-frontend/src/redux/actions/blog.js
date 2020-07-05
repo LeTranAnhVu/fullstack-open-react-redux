@@ -1,5 +1,5 @@
 import {setNotification} from './notification'
-import {ADD_BLOG, FETCH_BLOGS, LIKE_BLOG, REMOVE_BLOG} from '../types'
+import {ADD_BLOG, COMMENT_BLOG, FETCH_BLOGS, LIKE_BLOG, REMOVE_BLOG} from '../types'
 import blogService from '../../services/blogs'
 export const fetchBlogs = () => async dispatch => {
   try {
@@ -49,5 +49,29 @@ export const removeBlog = (payload) => async dispatch => {
     dispatch(setNotification({message: `${payload.title} is removed`, type: 'success'}))
   } catch (e) {
     dispatch(setNotification({message: 'Cannot remove blog', type: 'error'}))
+  }
+}
+
+export const addBlogById = (id) => async dispatch => {
+  try {
+    const blog = await blogService.getById(id)
+    dispatch({
+      type: ADD_BLOG,
+      payload: blog
+    })
+  } catch (e) {
+    dispatch(setNotification({message: 'Cannot fetched blog', type: 'error'}))
+  }
+}
+
+export const leaveBlogCommentById = (id, comment) => async dispatch => {
+  try {
+    const blog = await blogService.commentById(id, comment)
+    dispatch({
+      type: COMMENT_BLOG,
+      payload: blog
+    })
+  } catch (e) {
+    dispatch(setNotification({message: 'Cannot leave comment', type: 'error'}))
   }
 }

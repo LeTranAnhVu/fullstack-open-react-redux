@@ -1,42 +1,52 @@
 import React, {useEffect} from 'react'
-import LoginForm from './components/LoginForm'
-
-import './App.css'
-import CreateBlogForm from './components/CreateBlogForm'
-import Togglable from './components/Togglable'
-import BlogList from './components/BlogList'
+import {Switch, Route} from 'react-router-dom'
 import Notification from './components/Notification'
-import {useCurrentUser} from './hooks'
 import {getUserFromLocal} from './redux/actions/currentUser'
 import {useDispatch} from 'react-redux'
+import Home from './pages/Home'
+import UsersPage from './pages/UsersPage'
+import LoginForm from './components/LoginForm'
+import {useCurrentUser} from './hooks'
+import UserDetailPage from './pages/UserDetailPage'
+import BlogDetailPage from './pages/BlogDetailPage'
+import Menu from './components/Menu'
+import LoginPage from './pages/LoginPage'
 
 const App = () => {
   const dispatch = useDispatch()
-  const {currentUser, handlerLogout} = useCurrentUser()
+
 
   useEffect(() => {
     dispatch(getUserFromLocal())
   }, [])
 
-  const afterLogin = () => (
-    <>
-      <h2>{currentUser.name} logged in <button onClick={handlerLogout}>logout</button></h2>
-      <Togglable buttonLabel={'new blog'}>
-        <CreateBlogForm/>
-      </Togglable>
-    </>
-  )
   return (
     <div>
       <Notification/>
+      <Menu/>
       <h2>blogs</h2>
-      {
-        !currentUser ?
-          <LoginForm/>
-          :
-          afterLogin()
-      }
-      <BlogList/>
+
+      <Switch>
+        <Route exact path={'/login'}>
+          <LoginPage/>
+        </Route>
+
+        <Route exact path={'/'}>
+          <Home/>
+        </Route>
+
+        <Route exact path={'/blogs/:id'}>
+          <BlogDetailPage/>
+        </Route>
+
+        <Route path={'/users/:id'}>
+          <UserDetailPage/>
+        </Route>
+        
+        <Route path={'/users'}>
+          <UsersPage/>
+        </Route>
+      </Switch>
     </div>
   )
 }

@@ -27,6 +27,11 @@ const getAll = async () => {
   return response.data
 }
 
+const getById = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`)
+  return response.data
+}
+
 const create = async (payload) => {
   const response = await axios.post(baseUrl, payload)
   return response.data
@@ -42,9 +47,14 @@ const likeById = async (id) => {
   return response.data
 }
 
+const commentById = async (id, comment) => {
+  const response = await axios.patch(`${baseUrl}/${id}/comments`, {comment})
+  return response.data
+}
+
 const removeById = async (id) => {
   const response = await axios.delete(`${baseUrl}/${id}`)
   return response.data
 }
 
-export default {getAll, create, updateById, likeById, removeById}
+export default {getAll, create, updateById, likeById, removeById, getById, commentById}

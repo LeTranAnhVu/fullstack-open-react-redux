@@ -2,7 +2,7 @@ import localstorage from '../../utils/localstorage'
 import {LOGIN, LOGOUT, UPDATE_CURRENT_USER} from '../types'
 import {setNotification} from './notification'
 import {login} from '../../services/login'
-
+import history from '../../history'
 export const currentUserLogin = (credentials) => async dispatch => {
   try {
     const user = await login(credentials)
@@ -14,6 +14,7 @@ export const currentUserLogin = (credentials) => async dispatch => {
     localstorage.saveItem('user', info)
     dispatch({type: LOGIN, payload: info})
     dispatch(setNotification({message: `${info.username} logged in`, type: 'success'}))
+    history.push('/')
   }catch (e) {
     if (e.response && e.response.data && e.response.data.error) {
       dispatch(setNotification({message: e.response.data.error, type: 'error'}))
