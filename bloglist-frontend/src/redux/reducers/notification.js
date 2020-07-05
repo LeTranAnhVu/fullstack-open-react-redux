@@ -1,3 +1,4 @@
+import {PUSH_NOTIFICATION, REMOVE_NOTIFICATION} from '../types'
 
 const initialState = {
   message: '',
@@ -7,16 +8,10 @@ const initialState = {
 
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'PUSH_NOTIFICATION': {
-      if (state.id){
-        clearTimeout(state.id)
-      }
+    case PUSH_NOTIFICATION: {
       return action.payload
     }
-    case 'REMOVE_NOTIFICATION': {
-      if (state.id){
-        clearTimeout(state.id)
-      }
+    case REMOVE_NOTIFICATION: {
       return {...initialState}
     }
     default: {

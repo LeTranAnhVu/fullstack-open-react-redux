@@ -1,35 +1,26 @@
 import React, {useState} from 'react'
-import blogService from '../services/blogs'
-import Notification from './Notification'
 import {useDispatch} from 'react-redux'
 import {createBlog} from '../redux/actions/blog'
+import {useField} from '../hooks'
 
 const CreateBlogForm = () => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const {reset: resetTitle, ...titleField}= useField('title')
+  const {reset: resetAuthor, ...authorField}= useField('author')
+  const {reset: resetUrl, ...urlField}= useField('url')
   const dispatch = useDispatch()
 
   const resetForm = () => {
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-  }
-
-  const updateNewValue = (e) => {
-    const fieldName = e.target.name
-    const value = e.target.value
-    if (fieldName === 'title') {
-      setTitle(value)
-    } else if (fieldName === 'author') {
-      setAuthor(value)
-    } else if (fieldName === 'url') {
-      setUrl(value)
-    }
+    resetTitle()
+    resetAuthor()
+    resetUrl()
   }
 
   const addNewBlog = async (e) => {
     e.preventDefault()
+    const {value:title} = titleField
+    const {value:author} = authorField
+    const {value:url} = urlField
+
     const payload = {title, author, url}
     await dispatch(createBlog(payload))
     resetForm()
@@ -40,13 +31,13 @@ const CreateBlogForm = () => {
       <h3>Add new blog</h3>
       <form>
         <div>
-          title: <input value={title} type="text" name={'title'} onChange={updateNewValue}/>
+          title: <input {...titleField}/>
         </div>
         <div>
-          author: <input value={author} type="text" name={'author'} onChange={updateNewValue}/>
+          author: <input {...authorField}/>
         </div>
         <div>
-          url: <input value={url} type="text" name={'url'} onChange={updateNewValue}/>
+          url: <input {...urlField}/>
         </div>
         <div>
           <button onClick={addNewBlog} type="submit">add</button>

@@ -1,39 +1,26 @@
-import React, {useState, useEffect} from 'react'
-import Blog from './components/Blog'
-import blogService from './services/blogs'
+import React, {useEffect} from 'react'
 import LoginForm from './components/LoginForm'
-
-import localstorage from './utils/localstorage'
 
 import './App.css'
 import CreateBlogForm from './components/CreateBlogForm'
 import Togglable from './components/Togglable'
 import BlogList from './components/BlogList'
 import Notification from './components/Notification'
+import {useCurrentUser} from './hooks'
+import {getUserFromLocal} from './redux/actions/currentUser'
+import {useDispatch} from 'react-redux'
 
 const App = () => {
-  const [user, setUser] = useState(null)
+  const dispatch = useDispatch()
+  const {currentUser, handlerLogout} = useCurrentUser()
 
   useEffect(() => {
-    // check token
-    const userEncoded = localstorage.getItem('user')
-    if (userEncoded) {
-      setUser(userEncoded)
-    }
+    dispatch(getUserFromLocal())
   }, [])
-
-  const handleLoginSuccess = (user) => {
-    setUser(user)
-  }
-
-  const handlerLogout = () => {
-    localstorage.clearAll()
-    setUser(null)
-  }
 
   const afterLogin = () => (
     <>
-      <h2>{user.name} logged in <button onClick={handlerLogout}>logout</button></h2>
+      <h2>{currentUser.name} logged in <button onClick={handlerLogout}>logout</button></h2>
       <Togglable buttonLabel={'new blog'}>
         <CreateBlogForm/>
       </Togglable>
@@ -44,8 +31,8 @@ const App = () => {
       <Notification/>
       <h2>blogs</h2>
       {
-        !user ?
-          <LoginForm onLoginSuccess={handleLoginSuccess}/>
+        !currentUser ?
+          <LoginForm/>
           :
           afterLogin()
       }

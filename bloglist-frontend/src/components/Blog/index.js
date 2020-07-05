@@ -1,24 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
-import blogService from '../../services/blogs'
 import './Blog.css'
-import localstorage from '../../utils/localstorage'
 import {useDispatch} from 'react-redux'
 import {likeBlog, removeBlog} from '../../redux/actions/blog'
-
+import {useOwnBlog} from '../../hooks'
 const Blog = ({blog}) => {
   const [isShow, setIsShow] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [isAllowRemove, setIsAllowRemove] = useState(false)
-  const dispatch = useDispatch()
 
-  useEffect(() => {
-    const {user} = blog
-    const loggedInUser = localstorage.getItem('user')
-    if (user && loggedInUser) {
-      setIsAllowRemove(loggedInUser.id === user)
-    }
-  }, [blog])
+  const dispatch = useDispatch()
+  const isOwner = useOwnBlog(blog)
 
   const handleLike = async () => {
     setIsLoading(true)
@@ -46,7 +37,7 @@ const Blog = ({blog}) => {
           <button className={'like-btn'} onClick={handleLike}>like</button>
         </p>
         {
-          isAllowRemove && <button onClick={handleRemove}>Remove</button>
+          isOwner && <button onClick={handleRemove}>Remove</button>
         }
       </div>
     </div>

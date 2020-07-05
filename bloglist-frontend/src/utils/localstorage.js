@@ -6,8 +6,6 @@ const getItem = (key) => {
   }catch (e) {
     return item
   }
-
-
 }
 
 const saveItem = (key, value) => {
