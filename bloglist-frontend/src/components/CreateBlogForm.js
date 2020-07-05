@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import blogService from '../services/blogs'
 import Notification from './Notification'
-import PropTypes from 'prop-types'
+import {useDispatch} from 'react-redux'
+import {createBlog} from '../redux/actions/blog'
 
-const CreateBlogForm = ({onCreateSuccess}) => {
+const CreateBlogForm = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-  const [notification, setNotification] = useState({message: null, type: null})
+  const dispatch = useDispatch()
 
   const resetForm = () => {
     setTitle('')
@@ -27,31 +28,16 @@ const CreateBlogForm = ({onCreateSuccess}) => {
     }
   }
 
-  const createBlog = async (e) => {
+  const addNewBlog = async (e) => {
     e.preventDefault()
     const payload = {title, author, url}
-    try {
-      const newBlog = await blogService.create(payload)
-      resetForm()
-      onCreateSuccess()
-      setNotification({message: `${newBlog.title} by ${newBlog.author || 'unknown'} added`, type: 'success'})
-    } catch (e) {
-      if (e.response && e.response.data && e.response.data.error) {
-        setNotification({message: e.response.data.error, type: 'error'})
-      } else {
-        setNotification({message: 'Cannot add blog', type: 'error'})
-      }
-    } finally {
-      setTimeout(() => {
-        setNotification({message: null, type: null})
-      }, 3000)
-    }
+    await dispatch(createBlog(payload))
+    resetForm()
   }
 
   return (
     <div>
       <h3>Add new blog</h3>
-      {notification.message && <Notification message={notification.message} type={notification.type}/>}
       <form>
         <div>
           title: <input value={title} type="text" name={'title'} onChange={updateNewValue}/>
@@ -63,15 +49,11 @@ const CreateBlogForm = ({onCreateSuccess}) => {
           url: <input value={url} type="text" name={'url'} onChange={updateNewValue}/>
         </div>
         <div>
-          <button onClick={createBlog} type="submit">add</button>
+          <button onClick={addNewBlog} type="submit">add</button>
         </div>
       </form>
     </div>
   )
-}
-
-CreateBlogForm.propTypes = {
-  onCreateSuccess: PropTypes.func.isRequired,
 }
 
 export default CreateBlogForm

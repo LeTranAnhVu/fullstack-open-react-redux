@@ -3,45 +3,34 @@ import PropTypes from 'prop-types'
 import blogService from '../../services/blogs'
 import './Blog.css'
 import localstorage from '../../utils/localstorage'
+import {useDispatch} from 'react-redux'
+import {likeBlog, removeBlog} from '../../redux/actions/blog'
 
-const Blog = ({onUpdateSuccess, blog}) => {
+const Blog = ({blog}) => {
   const [isShow, setIsShow] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isAllowRemove, setIsAllowRemove] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const {user} = blog
     const loggedInUser = localstorage.getItem('user')
     if (user && loggedInUser) {
-      setIsAllowRemove(loggedInUser.id === user._id)
+      setIsAllowRemove(loggedInUser.id === user)
     }
   }, [blog])
 
   const handleLike = async () => {
-    const {id} = blog
     setIsLoading(true)
-    try {
-      await blogService.likeById(id)
-      onUpdateSuccess()
-    } catch (e) {
-      console.log(e.response)
-      // onUpdateFail(message)
-    } finally {
-      setIsLoading(false)
-    }
+    await dispatch(likeBlog(blog))
+    setIsLoading(false)
   }
   const handleRemove = async () => {
     const answer = window.confirm(`Delete blog ${blog.title} by ${blog.author}?`)
     if (answer) {
       const {id} = blog
       setIsLoading(true)
-      try {
-        await blogService.removeById(id)
-        onUpdateSuccess()
-      } catch (e) {
-        console.log(e.response)
-        // onUpdateFail(message)
-      }
+      await dispatch(removeBlog(blog))
     }
   }
 
@@ -65,7 +54,6 @@ const Blog = ({onUpdateSuccess, blog}) => {
 }
 
 Blog.propTypes = {
-  onUpdateSuccess: PropTypes.func,
-  blog: PropTypes.object
+  blog: PropTypes.object.isRequired
 }
 export default Blog

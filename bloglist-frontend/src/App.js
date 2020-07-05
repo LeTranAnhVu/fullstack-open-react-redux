@@ -8,9 +8,10 @@ import localstorage from './utils/localstorage'
 import './App.css'
 import CreateBlogForm from './components/CreateBlogForm'
 import Togglable from './components/Togglable'
+import BlogList from './components/BlogList'
+import Notification from './components/Notification'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -20,20 +21,6 @@ const App = () => {
       setUser(userEncoded)
     }
   }, [])
-  useEffect(() => {
-    fetchBlogs()
-  }, [])
-
-  const fetchBlogs = async () => {
-    const blogs = await blogService.getAll()
-
-    blogs.sort((blogA, blogB) => blogB.likes - blogA.likes)
-    setBlogs(blogs)
-  }
-
-  const onNewBlogCreated = () => {
-    fetchBlogs()
-  }
 
   const handleLoginSuccess = (user) => {
     setUser(user)
@@ -44,20 +31,17 @@ const App = () => {
     setUser(null)
   }
 
-  const onUpdateSuccess = () => {
-    fetchBlogs()
-  }
-
   const afterLogin = () => (
     <>
       <h2>{user.name} logged in <button onClick={handlerLogout}>logout</button></h2>
       <Togglable buttonLabel={'new blog'}>
-        <CreateBlogForm onCreateSuccess={onNewBlogCreated}/>
+        <CreateBlogForm/>
       </Togglable>
     </>
   )
   return (
     <div>
+      <Notification/>
       <h2>blogs</h2>
       {
         !user ?
@@ -65,9 +49,7 @@ const App = () => {
           :
           afterLogin()
       }
-      {blogs.map(blog =>
-        <Blog key={blog.id} onUpdateSuccess={onUpdateSuccess} blog={blog}/>
-      )}
+      <BlogList/>
     </div>
   )
 }
