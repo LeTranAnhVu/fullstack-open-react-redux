@@ -1,17 +1,15 @@
 import React from 'react'
-import {useDispatch} from 'react-redux'
+import {connect} from 'react-redux'
 import {voteAction} from '../actions/anecdote'
 
-const Anecdote = ({anecdote}) => {
+const Anecdote = ({anecdote, voteAction}) => {
   const style = {
     border: `1px #ccc solid`,
     margin: `10px`,
     padding: `10px`
   }
-  const dispatch = useDispatch()
   const vote = () => {
-    dispatch(voteAction(anecdote))
-
+    voteAction(anecdote)
   }
   return (
     <div style={style}>
@@ -25,4 +23,5 @@ const Anecdote = ({anecdote}) => {
     </div>
   )
 }
-export default Anecdote
+const mapDispatchToProps = {voteAction}
+export default connect(undefined,mapDispatchToProps)(Anecdote)

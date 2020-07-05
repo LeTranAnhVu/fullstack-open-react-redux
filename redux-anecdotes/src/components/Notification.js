@@ -1,16 +1,15 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {removeNotification} from '../actions/notification'
+import React from 'react'
+import {connect} from 'react-redux'
 
-const Notification = ({timeout = 5000}) => {
+const Notification = ({notification}) => {
   const style = {
     border: 'solid',
     padding: 10,
-    borderWidth: 1
+    borderWidth: 1,
+    position: `fixed`,
+    top: `20px`,
+    right: `30px`
   }
-  // const dispatch = useDispatch()
-  const notification = useSelector(({notification})=> ({...notification}))
-
   // useEffect(() => {
   //   let id = setTimeout(() => {
   //     dispatch(removeNotification())
@@ -31,5 +30,5 @@ const Notification = ({timeout = 5000}) => {
   }
 
 }
-
-export default Notification
+const mapStateToProps = ({notification}) => ({notification})
+export default connect(mapStateToProps)(Notification)

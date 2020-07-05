@@ -1,21 +1,13 @@
 import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {connect} from 'react-redux'
+
 import _ from 'lodash'
 import Anecdote from './Anecdote'
 import {initAnecdoteAction} from '../actions/anecdote'
 
-const AnecdoteList = () => {
-  const dispatch = useDispatch()
-  const anecdotes = useSelector(({anecdotes, filter}) => {
-    const clonedAnecdotes = anecdotes.filter(item => {
-      const re = new RegExp(filter, 'i')
-      return re.test(item.content)
-    })
-    return _.sortBy(clonedAnecdotes, 'votes').reverse()
-  })
-
+const AnecdoteList = ({anecdotes, initAnecdoteAction}) => {
   useEffect(() => {
-    dispatch(initAnecdoteAction())
+    initAnecdoteAction()
   }, [])
 
   return (
@@ -26,4 +18,16 @@ const AnecdoteList = () => {
     </div>
   )
 }
-export default AnecdoteList
+
+const mapStateToProps = ({anecdotes, filter}) => {
+  const clonedAnecdotes = anecdotes.filter(item => {
+    const re = new RegExp(filter, 'i')
+    return re.test(item.content)
+  })
+  return {
+    anecdotes: _.sortBy(clonedAnecdotes, 'votes').reverse()
+  }
+}
+
+const mapDispatchToProps = {initAnecdoteAction}
+export default connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)

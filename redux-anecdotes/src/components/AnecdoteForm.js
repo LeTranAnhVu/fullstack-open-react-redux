@@ -1,12 +1,9 @@
 import React, {useState} from 'react'
 import {addAnecdoteAction} from '../actions/anecdote'
-import {useDispatch} from 'react-redux'
-import {pushNotification} from '../actions/notification'
-import anecdoteService from '../service/anecdote'
+import {connect} from 'react-redux'
 
-const AnecdoteForm = () => {
+const AnecdoteForm = ({addAnecdoteAction}) => {
   const [data, setData] = useState('')
-  const dispatch = useDispatch()
   const handeData = (e) => {
     const value = e.target.value
     setData(value)
@@ -15,7 +12,7 @@ const AnecdoteForm = () => {
   const onCreate = async (e) => {
     e.preventDefault()
     if (data.trim()) {
-      dispatch(addAnecdoteAction(data.trim()))
+      addAnecdoteAction(data.trim())
       setData('')
     }
   }
@@ -31,5 +28,7 @@ const AnecdoteForm = () => {
   )
 }
 
-
-export default AnecdoteForm
+const mapDispatchToProps = {
+  addAnecdoteAction
+}
+export default connect(undefined, mapDispatchToProps)(AnecdoteForm)
