@@ -1,5 +1,5 @@
 import anecdoteService from '../service/anecdote'
-import {pushNotification} from './notification'
+import {setNotification} from './notification'
 
 
 export const voteAction = (anecdote) => async dispatch => {
@@ -10,9 +10,9 @@ export const voteAction = (anecdote) => async dispatch => {
       type: 'UPDATE_ANECDOTE',
       payload: updateAnecdote
     })
-    dispatch(pushNotification({message: `you voted ${anecdote.content}`, type: 'info'}))
+    dispatch(setNotification({message: `you voted ${anecdote.content}`, type: 'info'}, 3000))
   } catch (e) {
-    dispatch(pushNotification({message: `cannot voted ${anecdote.content}`, type: 'error'}))
+    dispatch(setNotification({message: `cannot voted ${anecdote.content}`, type: 'error'}, 3000))
   }
 
 }
@@ -24,11 +24,11 @@ export const addAnecdoteAction = (anecdoteContent) => async dispatch => {
       type: 'ADD_ANECDOTE',
       payload: newAnec
     })
-    dispatch(pushNotification({message: `you created ${anecdoteContent}`, type: 'info'}))
+    dispatch(setNotification({message: `you created ${anecdoteContent}`, type: 'info'}, 3000))
 
   } catch (e) {
     console.log(e.response)
-    dispatch(pushNotification({message: `cannot create ${anecdoteContent}`, type: 'error'}))
+    dispatch(setNotification({message: `cannot create ${anecdoteContent}`, type: 'error'}, 3000))
   }
 }
 
@@ -40,7 +40,7 @@ export const initAnecdoteAction = () => async dispatch => {
       payload: anecdotes
     })
   } catch (e) {
-    dispatch(pushNotification({message: 'Cannot init anecdots', type: 'error'}))
+    dispatch(setNotification({message: 'Cannot init anecdots', type: 'error'}, 3000))
   }
 
 }

@@ -28,22 +28,27 @@
     {
       "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
       "id": "98312",
-      "votes": 0
+      "votes": 1
     },
     {
       "content": "nenenenee",
       "id": "54222",
-      "votes": 0
+      "votes": 10
     },
     {
       "content": "Action creators are exactly that—functions that create actions. It's easy to conflate the terms “action” and “action creator”, so do your best to use the proper term",
       "id": "54159",
-      "votes": 5
+      "votes": 7
     },
     {
       "content": "create new",
       "id": "9545",
-      "votes": 5
+      "votes": 16
+    },
+    {
+      "content": "adddd new",
+      "id": "65412",
+      "votes": 0
     }
   ]
 }

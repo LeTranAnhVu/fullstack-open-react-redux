@@ -8,17 +8,17 @@ const Notification = ({timeout = 5000}) => {
     padding: 10,
     borderWidth: 1
   }
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const notification = useSelector(({notification})=> ({...notification}))
 
-  useEffect(() => {
-    let id = setTimeout(() => {
-      dispatch(removeNotification())
-    },timeout)
-    return () => {
-      clearTimeout(id)
-    }
-  },[notification])
+  // useEffect(() => {
+  //   let id = setTimeout(() => {
+  //     dispatch(removeNotification())
+  //   },timeout)
+  //   return () => {
+  //     clearTimeout(id)
+  //   }
+  // },[notification])
 
   if(notification.message) {
     return (
