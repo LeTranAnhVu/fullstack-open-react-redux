@@ -2,7 +2,7 @@ import React from 'react'
 import {useDispatch} from 'react-redux'
 import {createBlog} from '../redux/actions/blog'
 import {useField} from '../hooks'
-
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 const CreateBlogForm = () => {
   const {reset: resetTitle, ...titleField}= useField('title')
   const {reset: resetAuthor, ...authorField}= useField('author')
@@ -29,20 +29,21 @@ const CreateBlogForm = () => {
   return (
     <div>
       <h3>Add new blog</h3>
-      <form>
-        <div>
-          title: <input {...titleField}/>
-        </div>
-        <div>
-          author: <input {...authorField}/>
-        </div>
-        <div>
-          url: <input {...urlField}/>
-        </div>
-        <div>
-          <button onClick={addNewBlog} type="submit">add</button>
-        </div>
-      </form>
+      <Form onSubmit={addNewBlog}>
+        <FormGroup>
+          <Label >Title</Label>
+          <Input {...titleField} />
+        </FormGroup>
+        <FormGroup>
+          <Label >Author</Label>
+          <Input {...authorField} />
+        </FormGroup>
+        <FormGroup>
+          <Label >Url</Label>
+          <Input {...urlField} />
+        </FormGroup>
+        <Button color={'primary'}>Add</Button>
+      </Form>
     </div>
   )
 }

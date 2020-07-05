@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchUsers} from '../redux/actions/users'
 import {Link} from 'react-router-dom'
+import {Table} from 'reactstrap'
 
 const UserList = () => {
   const users = useSelector(({users}) => users) || []
@@ -12,9 +13,10 @@ const UserList = () => {
   }, [])
 
   const buildList = () => {
-    return users.map(user => {
+    return users.map((user,index) => {
         return (
-          <tr>
+          <tr key={user.id}>
+            <td>{index+1}</td>
             <td>
               <Link to={`/users/${user.id}`}>{user.name}</Link>
             </td>
@@ -24,17 +26,18 @@ const UserList = () => {
     })
   }
   return (
-    <table>
-      <thead>
-      <tr>
-        <th style={{minWidth: '100px'}}></th>
-        <th>blogs created</th>
-      </tr>
-      </thead>
-      <tbody>
-      {buildList()}
-      </tbody>
-    </table>
+      <Table>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Blogs created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {buildList()}
+        </tbody>
+      </Table>
   )
 }
 

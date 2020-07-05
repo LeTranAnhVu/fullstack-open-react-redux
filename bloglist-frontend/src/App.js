@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import Notification from './components/Notification'
 import {getUserFromLocal} from './redux/actions/currentUser'
 import {useDispatch} from 'react-redux'
@@ -24,25 +24,26 @@ const App = () => {
     <div>
       <Notification/>
       <Menu/>
-      <h2>blogs</h2>
-
       <Switch>
         <Route exact path={'/login'}>
           <LoginPage/>
         </Route>
-
         <Route exact path={'/'}>
-          <Home/>
+          <Redirect to={'/blogs'}/>
         </Route>
 
         <Route exact path={'/blogs/:id'}>
           <BlogDetailPage/>
         </Route>
 
+        <Route exact path={'/blogs'}>
+          <Home/>
+        </Route>
+
         <Route path={'/users/:id'}>
           <UserDetailPage/>
         </Route>
-        
+
         <Route path={'/users'}>
           <UsersPage/>
         </Route>

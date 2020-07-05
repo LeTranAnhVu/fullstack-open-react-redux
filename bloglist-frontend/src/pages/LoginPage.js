@@ -1,13 +1,17 @@
 import React from 'react'
-import UserList from '../components/UserList'
 import LoginForm from '../components/LoginForm'
+import {Col, Container, Row} from 'reactstrap'
 
 const LoginPage = () => {
   return (
-    <div>
-      <h1>Login</h1>
-      <LoginForm/>
-    </div>
+      <Container>
+        <Row>
+          <Col sm="12" md={{ size: 6, offset: 3 }}>
+            <h1>Login</h1>
+            <LoginForm/>
+          </Col>
+        </Row>
+      </Container>
   )
 }
 

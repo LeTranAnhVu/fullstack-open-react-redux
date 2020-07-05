@@ -2,7 +2,8 @@ import React from 'react'
 import {useField} from '../hooks'
 import {useDispatch} from 'react-redux'
 import {currentUserLogin} from '../redux/actions/currentUser'
-import {useHistory} from 'react-router-dom'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+
 
 const LoginForm = () => {
   const {reset: resetUsername, ...usernameField}= useField('username')
@@ -16,15 +17,17 @@ const LoginForm = () => {
     await dispatch(currentUserLogin({username, password}))
   }
   return (
-    <form onSubmit={handleLogin}>
-      <div>username
-        <input {...usernameField}/>
-      </div>
-      <div>password
-        <input {...passwordField}/>
-      </div>
-      <button type="submit">login</button>
-    </form>
+    <Form onSubmit={handleLogin}>
+      <FormGroup>
+        <Label for="username">Email</Label>
+        <Input id="username" {...usernameField} />
+      </FormGroup>
+      <FormGroup>
+        <Label for="password">Password</Label>
+        <Input id="password" {...passwordField} />
+      </FormGroup>
+      <Button>Submit</Button>
+    </Form>
   )
 }
 export default LoginForm

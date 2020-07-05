@@ -2,6 +2,7 @@ import React from 'react'
 import {Link, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {addUserById} from '../redux/actions/users'
+import {Badge, Container, ListGroup, ListGroupItem} from 'reactstrap'
 const UserDetailPage = () => {
   const dispatch = useDispatch()
   const {id} = useParams()
@@ -11,17 +12,24 @@ const UserDetailPage = () => {
     return null
   }
   return (
-    <div>
+    <Container>
       <h1>{user.name}</h1>
       <h4>Added blogs</h4>
-      <ul>
+      <ListGroup>
         {user.blogs && user.blogs.map(blog =>
-          <li key={blog.id}>
-            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-          </li>)
+          <ListGroupItem style={{display:"flex", justifyContent:"space-between"}} key={blog.id}>
+            <Link  to={`/blogs/${blog.id}`}>{blog.title}</Link>
+            <div>
+              <Badge color={'danger'}  pill>{blog.likes}</Badge>
+              <Badge className={'ml-2'} color={'success'}  pill>{blog.comments.length}</Badge>
+            </div>
+          </ListGroupItem>)
         }
+      </ListGroup>
+      <ul>
+
       </ul>
-    </div>
+    </Container>
   )
 }
 

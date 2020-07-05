@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {addBlogById, likeBlog} from '../redux/actions/blog'
 import Blog from '../components/Blog'
+import {Container} from 'reactstrap'
 const BlogDetailPage = () => {
   const dispatch = useDispatch()
   const {id} = useParams()
@@ -16,10 +17,10 @@ const BlogDetailPage = () => {
     return null
   }
   return (
-    <div>
+    <Container>
       <h1>{blog.title}</h1>
       <Blog blog={blog}/>
-    </div>
+    </Container>
   )
 }
 

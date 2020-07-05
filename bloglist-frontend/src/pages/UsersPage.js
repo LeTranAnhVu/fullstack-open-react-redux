@@ -1,12 +1,13 @@
 import React from 'react'
 import UserList from '../components/UserList'
+import {Container} from 'reactstrap'
 
 const UsersPage = () => {
   return (
-    <div>
+    <Container>
       <h1>Users</h1>
       <UserList/>
-    </div>
+    </Container>
   )
 }
 
